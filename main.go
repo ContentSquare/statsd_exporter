@@ -40,6 +40,7 @@ var (
 	mappingConfig       = flag.String("statsd.mapping-config", "", "Metric mapping configuration file name.")
 	readBuffer          = flag.Int("statsd.read-buffer", 0, "Size (in bytes) of the operating system's transmit read buffer associated with the UDP connection. Please make sure the kernel parameters net.core.rmem_max is set to a value greater than the value specified.")
 	showVersion         = flag.Bool("version", false, "Print version information.")
+	debugMode           = flag.Bool("debug", false, "Set log level to debug")
 )
 
 func serveHTTP() {
@@ -131,6 +132,11 @@ func watchConfig(fileName string, mapper *metricMapper) {
 
 func main() {
 	flag.Parse()
+
+	if *debugMode {
+		log.SetLevel("debug")
+		log.Debugln("Debug mode is ON")
+	}
 
 	if *showVersion {
 		fmt.Fprintln(os.Stdout, version.Print("statsd_exporter"))

@@ -345,6 +345,11 @@ func Fatalf(format string, args ...interface{}) {
 	baseLogger.sourced().Fatalf(format, args...)
 }
 
+// Debugln logs a message at level Debug on the standard logger.
+func SetLevel(level string) {
+	baseLogger.SetLevel(level)
+}
+
 type errorLogWriter struct{}
 
 func (errorLogWriter) Write(b []byte) (int, error) {
